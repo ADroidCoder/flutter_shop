@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/dao/SpUtil.dart';
 import 'package:flutter_shop/page/IndexPage.dart';
 import 'package:flutter_shop/page/LoginPage.dart';
 
@@ -8,14 +9,19 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  var _isLogin = false;
-
   @override
   void initState() {
     super.initState();
 
+    _loadConfig();
+  }
+
+  _loadConfig() async {
+    debugPrint(" start ");
+    var token = await SpUtil.getToken();
+    debugPrint(" end ");
     WidgetBuilder builder;
-    if (_isLogin) {
+    if (null != token) {
       builder = (ctx) {
         return IndexPage();
       };
@@ -24,7 +30,6 @@ class _SplashPageState extends State<SplashPage> {
         return LoginPage();
       };
     }
-
     Future.delayed(Duration(milliseconds: 1500), () {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: builder));

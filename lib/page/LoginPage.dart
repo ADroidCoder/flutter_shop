@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/dao/LoginDao.dart';
+import 'package:flutter_shop/dao/SpUtil.dart';
+import 'package:flutter_shop/model/token_entity.dart';
+import 'package:flutter_shop/model/user_entity.dart';
+import 'package:flutter_shop/page/IndexPage.dart';
 import 'package:flutter_shop/widget/bg_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,15 +14,19 @@ class LoginPage extends StatefulWidget {
 enum PageType { login, register }
 
 class _LoginPageState extends State<LoginPage> {
-
-
   PageType _pageType = PageType.login;
 
-  TextEditingController  _controller = TextEditingController();
+  User _user = User();
+
+  TextEditingController _controller = TextEditingController();
+
+  GlobalKey<FormState> _formKey = GlobalKey();
+  GlobalKey<ScaffoldState> _gk = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _gk,
       resizeToAvoidBottomPadding: false,
       body: Stack(
         children: [
@@ -32,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8), color: Colors.white),
               child: Form(
+                key: _formKey,
                 onWillPop: _showHint,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -158,7 +168,8 @@ class _LoginPageState extends State<LoginPage> {
             return val.length > 0 ? null : "账号不能为空";
           },
           onSaved: (val) {
-            // todo
+            _user.username = val;
+            debugPrint("- ${_user.username} -");
           },
         ),
         SizedBox(
@@ -181,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
             return val.length >= 6 ? null : "密码长度必须大于6位";
           },
           onSaved: (val) {
-            // todo
+            _user.password = val;
           },
         ),
         TextFormField(
@@ -288,7 +299,36 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  _submit() {}
+  _submit() {
+    FormState state = _formKey.currentState;
+    if (state.validate()) {
+      state.save();
+
+      _register() async {
+        _user.createTime = DateTime.now().toString();
+        var isSuc = await LoginDao.register(_user) ?? false;
+        _gk.currentState
+            .showSnackBar(SnackBar(content: Text(isSuc ? "注册成功" : "注册失败")));
+      }
+
+      _login() async {
+        TokenEntity token = await LoginDao.login(_user);
+        if (token != null) {
+          SpUtil.saveToken(token);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => IndexPage()));
+        } else {
+          _gk.currentState.showSnackBar(SnackBar(content: Text("登陆失败")));
+        }
+      }
+
+      if (PageType.login == _pageType) {
+        _login();
+      } else {
+        _register();
+      }
+    }
+  }
 
   Future<bool> _showHint() {
     return showDialog<bool>(
