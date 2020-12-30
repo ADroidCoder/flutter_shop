@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShopAppBar extends StatelessWidget implements PreferredSizeWidget {
+
   final Widget child;
-  double height;
+  final double height;
 
   ShopAppBar({Key key, @required this.child, @required this.height});
 
@@ -13,10 +14,10 @@ class ShopAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       padding: EdgeInsets.only(left: 6, right: 6, top: _statusHeight),
       child: this.child,
-      height: _statusHeight + this.height,
+      height: preferredSize.height+_statusHeight,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: [Colors.blueAccent[400]],
+            colors: [Colors.blue,Colors.lightBlue],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
