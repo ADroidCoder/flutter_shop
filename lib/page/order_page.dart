@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/dao/login_dao.dart';
+import 'package:flutter_shop/model/user_entity.dart';
 import 'package:flutter_shop/utils/app_size.dart';
 import 'package:flutter_shop/widget/app_topbar.dart';
 import 'package:flutter_shop/widget/customize_appbar.dart';
 
-class HomePage extends StatefulWidget {
+class OrderPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _OrderPageState createState() => _OrderPageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
+class _OrderPageState extends State<OrderPage> {
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return Scaffold(
-      appBar: ShopAppBar(
-        height: AppSize.height(55),
-        child: HomeTopBar(),
-      ),
-      body: Container(
-        color: Color(0xfff5f6f7),
-        child: Center(child: Text("home")),
-      ),
-    );
+  void initState() {
+    super.initState();
   }
 
   @override
-  bool get wantKeepAlive => true;
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: ShopAppBar(
+        height: AppSize.height(55),
+        child: CommonTopBar(title: "订单"),
+      ),
+      body: Container(
+        child: Center(child: Text("order")),
+      ),
+    );
+  }
 }

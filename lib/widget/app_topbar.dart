@@ -65,3 +65,18 @@ class HomeTopBar extends StatelessWidget {
     );
   }
 }
+
+
+class CommonTopBar extends StatelessWidget {
+  final String title;
+
+  CommonTopBar({
+    @required this.title
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child:
+    Text(title,style: TextStyle(color: Colors.white,fontSize: AppSize.sp(52))));
+  }
+}

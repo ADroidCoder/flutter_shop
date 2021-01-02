@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/dao/SpUtil.dart';
-import 'package:flutter_shop/page/IndexPage.dart';
-import 'package:flutter_shop/page/LoginPage.dart';
+import 'package:flutter_shop/dao/sp_util.dart';
+import 'package:flutter_shop/page/index_page.dart';
+import 'package:flutter_shop/page/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override

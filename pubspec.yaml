@@ -27,6 +27,9 @@ dependencies:
   shared_preferences: ^0.5.12+4
   flutter_screenutil: ^4.0.2+2
   provider: ^4.3.2+3
+  flutter_easyrefresh: ^2.1.8
+  flutter_swiper: ^1.1.6
+  flutter_staggered_grid_view: ^0.3.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -77,3 +80,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+fonts:
+  - family:  MyIcons
+    fonts:
+      - asset: fonts/MyFlutterApp.ttf
+
+  - family:  MyIcons2
+    fonts:
+      - asset: fonts/iconfont2.ttf
+
+  - family:  IconFont
+    fonts:
+      - asset: fonts/iconfont.ttf
